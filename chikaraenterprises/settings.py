@@ -25,7 +25,12 @@ SECRET_KEY = 'b2i8)!w7=ya-m-9ejcn7#nj+#i*y_d)ag%$x92flply&z7_00^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '.ngrok-free.app',
+]
 
 
 # Application definition
@@ -41,7 +46,7 @@ INSTALLED_APPS = [
     'accounts',
     'store',
     'carts',
-    # 'orders',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +151,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mandeep975647@gmail.com'
 EMAIL_HOST_PASSWORD = 'ndlg xpsu frra fzqc'
 EMAIL_USE_TLS = True
+
+RAZORPAY_KEY_ID = 'rzp_test_T1NkYK4a0vHTzD'
+RAZORPAY_KEY_SECRET = 'O33rnuJEZ2ilHG0zBVxQr9Jz'
