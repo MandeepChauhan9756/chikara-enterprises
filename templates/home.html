@@ -1,58 +1,257 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
 
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
 
-{% extends 'base.html' %}
-{% load static %}
+<!-- ================= HERO SECTION ================= -->
 
-{% block content %}
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="hero-tag"> Trusted Since 2026 </span>
 
+        <h1>
+          Premium Electrical
+          <br />
 
+          & Industrial Products
+        </h1>
 
-<!-- ========================= SECTION MAIN ========================= -->
-<section class="section-intro padding-y-sm">
-<div class="container">
+        <p>
+          Welcome to <strong>CHIKARA ENTERPRISES</strong>. Discover premium
+          electrical supplies, industrial equipment, safety products and
+          accessories with trusted quality and fast delivery.
+        </p>
 
-<div class="intro-banner-wrap">
-	<img src="{% static 'images/banners/cover.jpg' %}" class="img-fluid rounded">
-</div>
+        <div class="hero-buttons">
+          <a href="{% url 'store' %}" class="btn-shop"> Shop Now </a>
 
-</div> <!-- container //  -->
+          <a href="#popular-products" class="btn-outline"> Explore Products </a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="{% static 'images/banners/cover.jpg' %}" alt="Banner" />
+      </div>
+    </div>
+  </div>
 </section>
-<!-- ========================= SECTION MAIN END// ========================= -->
 
-<!-- ========================= SECTION  ========================= -->
-<section class="section-name padding-y-sm">
-<div class="container">
+<!-- ================= FEATURES ================= -->
 
-<header class="section-heading">
-	<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-	<h3 class="section-title">Popular products</h3>
-</header><!-- sect-heading -->
+<section class="features-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa fa-truck"></i>
+          </div>
 
+          <h5>Free Delivery</h5>
 
-<div class="row">
-	{% for product in products %}
-	<div class="col-md-3">
-		<div class="card card-product-grid">
-			<a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.images.url }}"> </a>
-			<figcaption class="info-wrap">
-				<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
-				<div class="price mt-1">$ {{ product.price }}</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	{% endfor %}
-</div> <!-- row.// -->
+          <p>Free shipping on eligible orders.</p>
+        </div>
+      </div>
 
-</div><!-- container // -->
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa fa-shield-alt"></i>
+          </div>
+
+          <h5>Secure Payment</h5>
+
+          <p>100% secure payment gateway.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa fa-headset"></i>
+          </div>
+
+          <h5>24×7 Support</h5>
+
+          <p>Dedicated customer assistance.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fa fa-medal"></i>
+          </div>
+
+          <h5>Premium Quality</h5>
+
+          <p>Trusted products from top brands.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- ========================= SECTION  END// ========================= -->
 
+<!-- ================= CATEGORIES ================= -->
 
+<section class="category-section">
+  <div class="container">
+    <div class="section-heading-custom">
+      <span> Browse Categories </span>
 
+      <h2>Shop by Category</h2>
+    </div>
 
+    <div class="row">
+      {% for category in links %}
 
+      <div class="col-lg-3 col-md-4 col-6 mb-4">
+        <a href="{{ category.get_url }}" class="category-card">
+          <div class="category-icon">
+            <i class="fa fa-box-open"></i>
+          </div>
 
-</body>
-</html>
+          <h5>{{ category.category_name }}</h5>
+
+          <span> View Products → </span>
+        </a>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= POPULAR PRODUCTS START ================= -->
+
+<section class="popular-products" id="popular-products">
+  <div class="container">
+    <div class="section-heading-custom">
+      <span> Featured Collection </span>
+
+      <h2>Popular Products</h2>
+
+      <p>
+        Discover our most popular products carefully selected for quality,
+        performance and reliability.
+      </p>
+    </div>
+
+    <div class="row">
+      {% for product in products %}
+
+      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+        <div class="product-card">
+          <div class="product-image">
+            <a href="{{ product.get_url }}">
+              <img
+                src="{{ product.images.url }}"
+                alt="{{ product.product_name }}"
+              />
+            </a>
+
+            <span class="sale-badge"> NEW </span>
+
+            <button class="wishlist-btn">
+              <i class="fa fa-heart"></i>
+            </button>
+          </div>
+
+          <div class="product-content">
+            <div class="product-rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-alt"></i>
+
+              <span>(4.8)</span>
+            </div>
+
+            <h5>
+              <a href="{{ product.get_url }}"> {{ product.product_name }} </a>
+            </h5>
+
+            <div class="price-row">
+              <div class="price">₹ {{ product.price }}</div>
+            </div>
+
+            <a href="{{ product.get_url }}" class="view-btn"> View Details </a>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{% url 'store' %}" class="btn-shop"> View All Products </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEWSLETTER ================= -->
+
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-box">
+      <div class="row align-items-center">
+        <div class="col-lg-7">
+          <span class="newsletter-tag"> Stay Updated </span>
+
+          <h2>Subscribe to Our Newsletter</h2>
+
+          <p>
+            Get updates on new arrivals, exclusive offers, product launches and
+            exciting deals directly in your inbox.
+          </p>
+        </div>
+
+        <div class="col-lg-5">
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email address" />
+
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BRANDS ================= -->
+
+<section class="brands-section">
+  <div class="container">
+    <div class="section-heading-custom">
+      <span> Trusted Partners </span>
+
+      <h2>Our Trusted Brands</h2>
+    </div>
+
+    <div class="row text-center">
+      <div class="col">
+        <div class="brand-card">ABB</div>
+      </div>
+
+      <div class="col">
+        <div class="brand-card">Siemens</div>
+      </div>
+
+      <div class="col">
+        <div class="brand-card">Havells</div>
+      </div>
+
+      <div class="col">
+        <div class="brand-card">Schneider</div>
+      </div>
+
+      <div class="col">
+        <div class="brand-card">L&T</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

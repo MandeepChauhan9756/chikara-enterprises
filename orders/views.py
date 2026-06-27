@@ -15,10 +15,21 @@ from django.core.mail import EmailMessage
 # Create your views here.
 def payments(request):
     body = json.loads(request.body)
-    order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
+    print("BODY:", body)
+    print("ORDERID:", body.get('orderID'))
+    # order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
+    order = Order.objects.filter(user=request.user, is_ordered=False, order_number=body.get('orderID')).first()
+    if not order:
+        return JsonResponse({
+            "error": "Order not found"
+        }, status=400)
+        
+    # ❌ IF FAILED → STOP HERE
+    if body.get('status') != "COMPLETED":
+        return JsonResponse({"message": "Payment failed"}, status=400)
     
     # Store transaction details inside Payment table
-    payment = Payment(
+    payment = Payment.objects.create(
         user = request.user,
         payment_id = body['transID'],
         payment_method = body['payment_method'],
@@ -141,24 +152,44 @@ def place_order(request, total=0, quantity=0):
             return redirect('checkout')
         
 
+# def order_complete(request):
+#     order_number = request.GET.get('order_number')
+#     transID = request.GET.get('payment_id')
+#     try:
+#         order = Order.objects.get(order_number=order_number, is_ordered = True)
+#         ordered_products = OrderProduct.objects.filter(order_id=order.id)
+#         subtotal = 0
+#         for i in ordered_products:
+#             subtotal += i.product_price * i.quantity
+#         payment = Payment.objects.get(payment_id=transID)
+#         context = {
+#             'order': order,
+#             'ordered_products': ordered_products,
+#             'order_number': order.order_number,
+#             'transID': payment.payment_id,
+#             'payment': payment,
+#             'subtotal': subtotal
+#         }
+#         return render(request, 'orders/order_complete.html', context)
+#     except (Payment.DoesNotExist, Order.DoesNotExist):
+#         return redirect('home')
+
 def order_complete(request):
     order_number = request.GET.get('order_number')
     transID = request.GET.get('payment_id')
-    try:
-        order = Order.objects.get(order_number=order_number, is_ordered = True)
-        ordered_products = OrderProduct.objects.filter(order_id=order.id)
-        subtotal = 0
-        for i in ordered_products:
-            subtotal += i.product_price * i.quantity
-        payment = Payment.objects.get(payment_id=transID)
-        context = {
-            'order': order,
-            'ordered_products': ordered_products,
-            'order_number': order.order_number,
-            'transID': payment.payment_id,
-            'payment': payment,
-            'subtotal': subtotal
-        }
-        return render(request, 'orders/order_complete.html', context)
-    except (Payment.DoesNotExist, Order.DoesNotExist):
-        return redirect('home')
+
+    order = Order.objects.get(order_number=order_number, is_ordered=True)
+    payment = Payment.objects.get(payment_id=transID)
+
+    ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+    subtotal = sum(i.product_price * i.quantity for i in ordered_products)
+
+    return render(request, 'orders/order_complete.html', {
+        'order': order,
+        'ordered_products': ordered_products,
+        'payment': payment,
+        'subtotal': subtotal,
+        'order_number': order.order_number,
+        'transID': payment.payment_id
+    })

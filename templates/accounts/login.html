@@ -1,51 +1,191 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
+<link rel="stylesheet" href="{% static 'css/login.css' %}" />
 
-{% block content %}
+<section class="login-page">
+  <!-- Background -->
 
-<section class="section-conten padding-y" style="min-height:84vh">
+  <div class="bg-circle circle1"></div>
+  <div class="bg-circle circle2"></div>
+  <div class="bg-circle circle3"></div>
 
-<!-- ============================ COMPONENT LOGIN   ================================= -->
+  <div class="container">
+    {% if request.GET.command == 'verification' %}
 
-{% if request.GET.command == 'verification' %}
+    <div class="verification-card">
+      <div class="verify-icon">
+        <i class="fa fa-check-circle"></i>
+      </div>
 
-<div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
-Thank you for registering with us. We have sent you a verification email to your email address [{{ request.GET.email }}]
-<br><br>
-Already verified? <a href="{% url 'login' %}">Login</a>
-</div>
+      <h2>Email Verified Successfully</h2>
 
-{% else %}
+      <p>
+        Thank you for registering with
+        <strong>CHIKARA ENTERPRISES</strong>
+      </p>
 
-	<div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+      <p>
+        Verification email sent to
 
-      <div class="card-body">
-      <h4 class="card-title mb-4">Sign in</h4>
-      {% include 'includes/alerts.html' %}
-      <form action="{% url 'login' %}" method="POST">
-        {% csrf_token %}
-          <div class="form-group">
-			 <input type="email" class="form-control" placeholder="Email Address" name="email">
-          </div> <!-- form-group// -->
-          <div class="form-group">
-			<input type="password" class="form-control" placeholder="Password" name="password">
-          </div> <!-- form-group// -->
+        <strong>{{ request.GET.email }}</strong>
+      </p>
 
-          <div class="form-group">
-          	<a href="{% url 'forgotPassword' %}" class="float-right">Forgot password?</a>
+      <a href="{% url 'login' %}" class="login-btn"> Login Now </a>
+    </div>
 
-          </div> <!-- form-group form-check .// -->
-          <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block"> Login  </button>
-          </div> <!-- form-group// -->
-      </form>
-      </div> <!-- card-body.// -->
-    </div> <!-- card .// -->
+    {% else %}
 
-     <p class="text-center mt-4">Don't have account? <a href="{% url 'register' %}">Sign up</a></p>
-     <br><br>
-<!-- ============================ COMPONENT LOGIN  END.// ================================= -->
-{% endif %}
+    <div class="login-wrapper">
+      <!-- Left Side -->
 
+      <div class="login-left">
+        <div class="brand">
+          <div class="brand-logo">CE</div>
+
+          {% comment %} <div class="brand-logo bg-white p-2">
+                <img src="{% static 'images/logo.png' %}" alt="CHIKARA ENTERPRISES" style="height:50px;">
+            </div> {% endcomment %}
+
+          <div>
+            <h2>CHIKARA</h2>
+
+            <span> ENTERPRISES </span>
+          </div>
+        </div>
+
+        <h1>Welcome Back 👋</h1>
+
+        <p>Sign in to continue shopping and manage your orders effortlessly.</p>
+
+        <ul class="feature-list">
+          <li>
+            <i class="fa fa-check-circle"></i>
+
+            Secure Checkout
+          </li>
+
+          <li>
+            <i class="fa fa-check-circle"></i>
+
+            Fast Delivery
+          </li>
+
+          <li>
+            <i class="fa fa-check-circle"></i>
+
+            Premium Quality Products
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right Side -->
+
+      <div class="login-right">
+        <div class="login-card">
+          <div class="card-header">
+            <h3>Login</h3>
+
+            <p>Enter your account credentials</p>
+          </div>
+
+          {% include 'includes/alerts.html' %}
+
+          <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+
+            <!-- Email -->
+
+            <div class="input-group-custom">
+              <span>
+                <i class="fa fa-envelope"></i>
+              </span>
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                required
+              />
+            </div>
+
+            <!-- Password -->
+
+            <div class="input-group-custom password-group">
+              <span>
+                <i class="fa fa-lock"></i>
+              </span>
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+
+              <button type="button" class="toggle-password">
+                <i class="fa fa-eye"></i>
+              </button>
+            </div>
+           
+            <!-- Remember + Forgot -->
+
+            <div class="login-options">
+              <label class="remember-me">
+                <input type="checkbox" />
+
+                <span>Remember Me</span>
+              </label>
+
+              <a href="{% url 'forgotPassword' %}"> Forgot Password? </a>
+            </div>
+
+            <!-- Login Button -->
+
+            <button type="submit" class="login-btn">
+              <i class="fa fa-sign-in"></i>
+
+              Login
+            </button>
+          </form>
+
+          <div class="divider">
+            <span>OR</span>
+          </div>
+
+          <div class="register-section">
+            <p>Don't have an account?</p>
+
+            <a href="{% url 'register' %}" class="register-btn">
+              Create Account
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
 </section>
+
+<script>
+  const togglePassword = document.querySelector(".toggle-password");
+
+  const password = document.getElementById("password");
+
+  if (togglePassword) {
+    togglePassword.addEventListener("click", function () {
+      if (password.type === "password") {
+        password.type = "text";
+
+        this.innerHTML = '<i class="fa fa-eye-slash"></i>';
+      } else {
+        password.type = "password";
+
+        this.innerHTML = '<i class="fa fa-eye"></i>';
+      }
+    });
+  }
+</script>
+
 {% endblock %}

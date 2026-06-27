@@ -1,13 +1,173 @@
 {% if messages %}
+  <style>
+    /* ================= ALERT WRAPPER ================= */
+    .alert-wrapper {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    /* ================= BASE ALERT ================= */
+    .custom-alert {
+      min-width: 320px;
+      max-width: 420px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      background: #fff;
+      animation: slideIn 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    
+    /* ================= ICON ================= */
+    .alert-icon {
+      font-size: 20px;
+    }
+    
+    /* ================= CONTENT ================= */
+    .alert-content {
+      flex: 1;
+      font-size: 14px;
+      color: #333;
+    }
+    
+    /* ================= CLOSE BUTTON ================= */
+    .alert-close {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: 0.3s;
+    }
+    
+    .alert-close:hover {
+      opacity: 1;
+    }
+    
+    /* ================= ALERT TYPES ================= */
+    .alert-success {
+      border-left: 5px solid #22c55e;
+    }
+    .alert-success .alert-icon {
+      color: #22c55e;
+    }
+    
+    .alert-error {
+      border-left: 5px solid #ef4444;
+    }
+    .alert-error .alert-icon {
+      color: #ef4444;
+    }
+    
+    .alert-warning {
+      border-left: 5px solid #f59e0b;
+    }
+    .alert-warning .alert-icon {
+      color: #f59e0b;
+    }
+    
+    .alert-info {
+      border-left: 5px solid #3b82f6;
+    }
+    .alert-info .alert-icon {
+      color: #3b82f6;
+    }
+    
+    /* ================= ANIMATION ================= */
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* ================= MOBILE ================= */
+    @media (max-width: 576px) {
+      .alert-wrapper {
+        right: 10px;
+        left: 10px;
+      }
+    
+      .custom-alert {
+        min-width: unset;
+        width: 100%;
+      }
+    }
+  </style>
 
+  <div class="alert-wrapper">
     {% for message in messages %}
-    <div id="message" class="container">
-    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
-      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error: {% endif %}
-        {{ message }}
-    </div>
-    </div>
-    {% endfor %}
+      <div class="custom-alert alert-{{ message.tags }}" role="alert">
+        <div class="alert-icon">
+          {% if message.tags == 'success' %}
+            <i class="fa fa-check-circle"></i>
+          {% elif message.tags == 'error' %}
+            <i class="fa fa-times-circle"></i>
+          {% elif message.tags == 'warning' %}
+            <i class="fa fa-exclamation-triangle"></i>
+          {% else %}
+            <i class="fa fa-info-circle"></i>
+          {% endif %}
+        </div>
 
+        <div class="alert-content">
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <strong>Error:</strong>
+          {% endif %}
+          {{ message }}
+        </div>
+
+        {% comment %} <button type="button" class="alert-close" data-dismiss="alert"><i class="fa fa-times"></i></button> {% endcomment %}
+      </div>
+    {% endfor %}
+  </div>
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const alerts = document.querySelectorAll(".custom-alert");
+
+    alerts.forEach((alert) => {
+
+        // manual close button
+        const closeBtn = alert.querySelector(".alert-close");
+
+        if (closeBtn) {
+            closeBtn.addEventListener("click", function () {
+                fadeOut(alert);
+            });
+        }
+
+        // AUTO CLOSE TIMER (CHANGE HERE)
+        setTimeout(() => {
+            fadeOut(alert);
+        }, 8000); // ⬅️ 8 seconds (increase as you want)
+
+    });
+
+    function fadeOut(alert) {
+        alert.style.transition = "0.5s ease";
+        alert.style.opacity = "0";
+        alert.style.transform = "translateX(50px)";
+
+        setTimeout(() => {
+            alert.remove();
+        }, 500);
+    }
+
+});
+</script>
 {% endif %}

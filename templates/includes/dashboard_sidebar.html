@@ -1,12 +1,200 @@
+<style>
+.dashboard-sidebar{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    position:sticky;
+    top:100px;
+}
+
+.dashboard-profile{
+    text-align:center;
+    padding-bottom:25px;
+    border-bottom:1px solid #edf2f7;
+    margin-bottom:20px;
+}
+
+.dashboard-avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    color:#fff;
+    font-size:34px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    box-shadow:0 10px 25px rgba(37,99,235,.35);
+}
+
+.dashboard-profile h5{
+    margin-top:18px;
+    margin-bottom:5px;
+    font-weight:700;
+    color:#1e293b;
+}
+
+.dashboard-profile p{
+    color:#64748b;
+    font-size:14px;
+    margin:0;
+}
+
+.dashboard-menu{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.dashboard-menu li{
+    margin-bottom:12px;
+}
+
+.dashboard-menu a{
+    display:flex;
+    align-items:center;
+    text-decoration:none;
+    color:#334155;
+    padding:14px 18px;
+    border-radius:14px;
+    transition:.35s;
+    font-weight:600;
+}
+
+.dashboard-menu a i{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:#eff6ff;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-right:14px;
+    transition:.35s;
+}
+
+.dashboard-menu a:hover{
+    background:#2563eb;
+    color:#fff;
+    transform:translateX(6px);
+    box-shadow:0 10px 25px rgba(37,99,235,.25);
+}
+
+.dashboard-menu a:hover i{
+    background:rgba(255,255,255,.2);
+    color:#fff;
+}
+
+.dashboard-menu .active{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:#fff;
+    box-shadow:0 10px 30px rgba(37,99,235,.30);
+}
+
+.dashboard-menu .active i{
+    background:rgba(255,255,255,.2);
+    color:#fff;
+}
+
+.logout-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    margin-top:25px;
+    padding:14px;
+    border-radius:14px;
+    text-decoration:none;
+    background:#ef4444;
+    color:#fff;
+    font-weight:700;
+    transition:.35s;
+}
+
+.logout-btn i{
+    margin-right:10px;
+}
+
+.logout-btn:hover{
+    background:#dc2626;
+    color:#fff;
+    text-decoration:none;
+    transform:translateY(-2px);
+    box-shadow:0 12px 30px rgba(239,68,68,.30);
+}
+
+@media(max-width:991px){
+
+.dashboard-sidebar{
+    margin-bottom:30px;
+    position:relative;
+    top:0;
+}
+
+}
+</style>
+
 <aside class="col-md-3">
-		<!--   SIDEBAR   -->
-		<ul class="list-group">
-			<a class="list-group-item {% if '/accounts/' == request.path %}active{% endif %}" href="{% url 'dashboard' %}"> Dashboard </a>
-			<a class="list-group-item {% if '/my_orders/' in request.path %}active{% endif %}" href="{% url 'my_orders' %}"> My Orders </a>
-			<a class="list-group-item {% if '/edit_profile/' in request.path %}active{% endif %}" href="{% url 'edit_profile' %}"> Edit Profile </a>
-			<a class="list-group-item {% if '/change_password/' in request.path %}active{% endif %}" href="{% url 'change_password' %}"> Change Password </a>
-		</ul>
-		<br>
-		<a class="btn btn-light btn-block" href="{% url 'logout' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a>
-		<!--   SIDEBAR .//END   -->
-	</aside>
+
+    <div class="dashboard-sidebar">
+
+        <div class="dashboard-profile">
+
+            <div class="dashboard-avatar">
+                {{ user.first_name|first|upper }}
+            </div>
+
+            <h5>{{ user.first_name }} {{ user.last_name }}</h5>
+
+            <p>{{ user.email }}</p>
+
+        </div>
+
+        <ul class="dashboard-menu">
+
+            <li>
+                <a href="{% url 'dashboard' %}"
+                   class="{% if '/accounts/' == request.path %}active{% endif %}">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'my_orders' %}"
+                   class="{% if '/my_orders/' in request.path %}active{% endif %}">
+                    <i class="fas fa-shopping-bag"></i>
+                    My Orders
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'edit_profile' %}"
+                   class="{% if '/edit_profile/' in request.path %}active{% endif %}">
+                    <i class="fas fa-user-edit"></i>
+                    Edit Profile
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'change_password' %}"
+                   class="{% if '/change_password/' in request.path %}active{% endif %}">
+                    <i class="fas fa-lock"></i>
+                    Change Password
+                </a>
+            </li>
+
+        </ul>
+
+        <a href="{% url 'logout' %}" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </a>
+
+    </div>
+
+</aside>

@@ -1,70 +1,228 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
 
-<section class="section-content padding-y">
-  <!-- ============================ COMPONENT REGISTER   ================================= -->
-  <div class="card mx-auto" style="max-width: 520px; margin-top: 40px">
-    <article class="card-body">
-      {% include 'includes/alerts.html' %}
-      <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-      <form action="{% url 'register' %}" method="POST">
-        {% csrf_token %}
+{% block content %}
 
-        <div class="form-row">
-          <div class="col form-group">
-            <label>First name</label>
-            {{ form.first_name }}
-          </div>
-          <!-- form-group end.// -->
-          <div class="col form-group">
-            <label>Last name</label>
-            {{ form.last_name }}
-          </div>
-          <!-- form-group end.// -->
-        </div>
-        <!-- form-row end.// -->
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
 
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label>Email Address</label>
-            {{form.email}}
-          </div>
-          <!-- form-group end.// -->
-          <div class="form-group col-md-6">
-            <label>Phone Number</label>
-            {{form.phone_number}}
-          </div>
-          <!-- form-group end.// -->
+<section class="register-page">
+
+    <!-- Background Shapes -->
+
+    <div class="bg-circle circle1"></div>
+    <div class="bg-circle circle2"></div>
+    <div class="bg-circle circle3"></div>
+
+    <div class="container">
+
+        <div class="register-wrapper">
+
+            <!-- Left Side -->
+
+            <div class="register-left">
+
+                <div class="brand">
+
+                    <div class="brand-logo">
+                        CE
+                        {% comment %} <img src="{% static 'images/logo.png' %}" alt="Logo"> {% endcomment %}
+
+                    </div>
+
+                    <div>
+
+                        <h2>CHIKARA</h2>
+
+                        <span>ENTERPRISES</span>
+
+                    </div>
+
+                </div>
+
+                <h1>Create Your Account</h1>
+
+                <p>
+
+                    Join thousands of happy customers and enjoy
+                    premium quality products, secure shopping and
+                    fast delivery across India.
+
+                </p>
+
+                <ul class="feature-list">
+
+                    <li>
+                        <i class="fa fa-check-circle"></i>
+                        Secure Shopping
+                    </li>
+
+                    <li>
+                        <i class="fa fa-check-circle"></i>
+                        Trusted Quality Products
+                    </li>
+
+                    <li>
+                        <i class="fa fa-check-circle"></i>
+                        Fast Delivery
+                    </li>
+
+                    <li>
+                        <i class="fa fa-check-circle"></i>
+                        24×7 Customer Support
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- Right Side -->
+
+            <div class="register-right">
+
+                <div class="register-card">
+
+                    <div class="card-header">
+
+                        <h3>Register</h3>
+
+                        <p>Create your account in less than a minute</p>
+
+                    </div>
+
+                    {% include 'includes/alerts.html' %}
+
+                    <form action="{% url 'register' %}" method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+
+                                    <label>First Name</label>
+
+                                    {{ form.first_name }}
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+
+                                    <label>Last Name</label>
+
+                                    {{ form.last_name }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+
+                                    <label>Email Address</label>
+
+                                    {{ form.email }}
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+
+                                    <label>Phone Number</label>
+
+                                    {{ form.phone_number }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+
+                                    <label>Password</label>
+
+                                    {{ form.password }}
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+
+                                    <label>Confirm Password</label>
+
+                                    {{ form.confirm_password }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {{ form.email.errors }}
+
+                        {{ form.non_field_errors }}
+
+                        <button type="submit" class="reg-register-btn">
+
+                            <i class="fa fa-user-plus"></i>
+
+                            Create Account
+
+                        </button>
+
+                    </form>
+
+                    <div class="divider">
+
+                        <span>OR</span>
+
+                    </div>
+
+                    <div class="login-section">
+
+                        <p>
+
+                            Already have an account?
+
+                        </p>
+
+                        <a href="{% url 'login' %}" class="reg-login-btn">
+
+                            Login Now
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-        <!-- form-row.// -->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label>Create password</label>
-            {{ form.password }}
-          </div>
-          <!-- form-group end.// -->
-          <div class="form-group col-md-6">
-            <label>Repeat password</label>
-            {{form.confirm_password}}
-          </div>
-          <!-- form-group end.// -->
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block">
-            Register
-          </button>
-        </div>
-        <!-- form-group// -->
-        {{ form.email.errors }} {{ form.non_field_errors }}
-      </form>
-    </article>
-    <!-- card-body.// -->
-  </div>
-  <!-- card .// -->
-  <p class="text-center mt-4">
-    Have an account? <a href="{% url 'login' %}">Log In</a>
-  </p>
-  <br /><br />
-  <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+
+    </div>
+
 </section>
 
 {% endblock %}

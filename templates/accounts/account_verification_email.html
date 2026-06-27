@@ -1,10 +1,67 @@
 {% autoescape off %}
 
-Hi {{user.first_name}},
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Verify Your Account</title>
+</head>
 
-Please click on below link to confirm your registration.
-http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+<body style="margin:0;padding:0;background:#f4f6fb;font-family:Arial, sans-serif;">
 
-If you think it's not you, please ignore this email.
+    <div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+
+        <!-- HEADER -->
+        <div style="background:linear-gradient(135deg,#2563eb,#1d4ed8);padding:28px;text-align:center;color:#fff;">
+            <h2 style="margin:0;font-size:22px;">Account Verification</h2>
+            <p style="margin:6px 0 0;font-size:13px;opacity:0.9;">Welcome to {{ domain }}</p>
+        </div>
+
+        <!-- BODY -->
+        <div style="padding:30px;color:#333;">
+
+            <p style="font-size:16px;margin-bottom:10px;">
+                Hi <strong>{{ user.first_name }}</strong>,
+            </p>
+
+            <p style="font-size:14px;line-height:1.7;color:#555;">
+                Please confirm your registration by clicking the button below.
+                This helps us secure your account and activate your profile.
+            </p>
+
+            <!-- BUTTON -->
+            <div style="text-align:center;margin:30px 0;">
+                <a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}"
+                   style="background:#2563eb;color:#fff;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:bold;display:inline-block;">
+                    Verify Account
+                </a>
+            </div>
+
+            <!-- LINK -->
+            <p style="font-size:12px;color:#888;line-height:1.6;">
+                If the button does not work, copy and paste the link below:
+            </p>
+
+            <p style="font-size:12px;color:#2563eb;word-break:break-all;">
+                http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+            </p>
+
+            <hr style="border:none;border-top:1px solid #eee;margin:25px 0;">
+
+            <p style="font-size:12px;color:#999;">
+                If you did not create this account, you can safely ignore this email.
+            </p>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div style="background:#f8fafc;text-align:center;padding:14px;font-size:12px;color:#888;">
+            © {{ domain }} • All rights reserved
+        </div>
+
+    </div>
+
+</body>
+</html>
 
 {% endautoescape %}

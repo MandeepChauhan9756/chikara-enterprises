@@ -1,33 +1,114 @@
-<!-- ========================= FOOTER ========================= -->
-<footer class="section-footer border-top">
-	<div class="container">
-		<section class="footer-bottom border-top row">
-			<div class="col-md-2">
-				<p class="text-muted"> &copy 2019 Company name </p>
-			</div>
-			<div class="col-md-8 text-md-center">
-				<span  class="px-2">info@pixsellz.io</span>
-				<span  class="px-2">+879-332-9375</span>
-				<span  class="px-2">Street name 123, Avanue abc</span>
-			</div>
-			<div class="col-md-2 text-md-right text-muted">
-				<i class="fab fa-lg fa-cc-visa"></i>
-				<i class="fab fa-lg fa-cc-paypal"></i>
-				<i class="fab fa-lg fa-cc-mastercard"></i>
-			</div>
-		</section>
-	</div><!-- //container -->
+<!-- ===================== FOOTER ===================== -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <!-- Company -->
+
+      <div class="col-lg-4 col-md-6 mb-5">
+        <div class="footer-logo">
+          <div class="logo-icon">CE</div>
+
+          <div>
+            <h3>CHIKARA ENTERPRISES</h3>
+
+            <p>
+              Your trusted destination for premium quality products with fast
+              delivery and secure shopping experience.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+
+      <div class="col-lg-2 col-md-6 mb-5">
+        <h5>Quick Links</h5>
+
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+
+          <li><a href="{% url 'store' %}">Store</a></li>
+
+          <li><a href="#">About</a></li>
+
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+
+      <div class="col-lg-2 col-md-6 mb-5">
+        <h5>Categories</h5>
+
+        <ul>
+          {% for category in links %}
+
+          <li>
+            <a href="{{ category.get_url }}"> {{ category.category_name }} </a>
+          </li>
+
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+
+      <div class="col-lg-4 col-md-6">
+        <h5>Contact</h5>
+
+        <ul class="contact-info">
+          <li>
+            <i class="fa fa-map-marker"></i>
+
+            Ghaziabad, Uttar Pradesh
+          </li>
+
+          <li>
+            <i class="fa fa-phone"></i>
+
+            +91 XXXXX XXXXX
+          </li>
+
+          <li>
+            <i class="fa fa-envelope"></i>
+
+            support@chikaraenterprises.com
+          </li>
+        </ul>
+
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+
+          <a href="#"><i class="fab fa-instagram"></i></a>
+
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container d-flex justify-content-between flex-wrap">
+      <span> © {% now "Y" %} CHIKARA ENTERPRISES. All Rights Reserved. </span>
+
+      <span> Designed with ❤️ using Django </span>
+    </div>
+  </div>
 </footer>
-<!-- ========================= FOOTER END // ========================= -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <script>
-	$(document).ready(function(){
-		$('.thumb a').click(function(e){
-			e.preventDefault();
-			$('.mainImage img').attr('src', $(this).attr("href"));
-		});
-	});
+  $(document).ready(function () {
+    $(".thumb a").click(function (e) {
+      e.preventDefault();
+      $(".mainImage img").attr("src", $(this).attr("href"));
+    });
+  });
 </script>
 
-</body>
-</html>
+<!-- </body>
+</html> -->

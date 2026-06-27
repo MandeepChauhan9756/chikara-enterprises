@@ -27,6 +27,27 @@ def store(request, category_slug=None):
         product_count = products.count()
     else: 
         products = Product.objects.all().filter(is_available=True).order_by('id')
+        sort = request.GET.get('sort')
+        if sort == 'price_low':
+            products = products.order_by('price')
+
+        elif sort == 'price_high':
+            products = products.order_by('-price')
+
+        elif sort == 'name':
+            products = products.order_by('product_name')
+
+        elif sort == 'newest':
+            products = products.order_by('-created_date')
+            
+        min_price = request.GET.get('min_price')
+        max_price = request.GET.get('max_price')
+
+        if min_price:
+            products = products.filter(price__gte=min_price)
+
+        if max_price:
+            products = products.filter(price__lte=max_price)
         paginator = Paginator(products, 6)
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)

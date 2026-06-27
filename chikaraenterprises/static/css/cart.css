@@ -1,0 +1,155 @@
+/* ================= PAGE ================= */
+.cart-section{
+    padding:40px 0;
+    background:#f8fafc;
+}
+
+/* ================= EMPTY CART ================= */
+.empty-cart{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.empty-icon{
+    font-size:70px;
+    color:#94a3b8;
+    margin-bottom:15px;
+}
+
+/* ================= CART CARD ================= */
+.cart-card{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.06);
+    overflow:hidden;
+}
+
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    padding:20px;
+    border-bottom:1px solid #eee;
+}
+
+/* ================= CART ITEM ================= */
+.cart-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:18px;
+    border-bottom:1px solid #f1f1f1;
+    transition:0.3s;
+}
+
+.cart-item:hover{
+    background:#f9fafb;
+}
+
+.cart-img img{
+    width:70px;
+    border-radius:10px;
+}
+
+/* ================= INFO ================= */
+.cart-info{
+    flex:1;
+}
+
+.cart-info a{
+    font-weight:600;
+    color:#111;
+    text-decoration:none;
+}
+
+/* ================= QTY ================= */
+.cart-qty{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.cart-qty input{
+    width:40px;
+    text-align:center;
+    border:1px solid #ddd;
+    border-radius:6px;
+}
+
+.qty-btn{
+    background:#e2e8f0;
+    padding:6px 10px;
+    border-radius:6px;
+    color:#111;
+    text-decoration:none;
+}
+
+/* ================= PRICE ================= */
+.cart-price{
+    text-align:right;
+}
+
+.cart-price strong{
+    display:block;
+}
+
+/* ================= REMOVE ================= */
+.cart-remove a{
+    color:#ef4444;
+    font-size:18px;
+}
+
+/* ================= SUMMARY ================= */
+.summary-card{
+    background:#fff;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+.summary-row.total{
+    font-weight:700;
+    font-size:18px;
+    border-top:1px solid #eee;
+    padding-top:10px;
+}
+
+/* ================= BUTTONS ================= */
+.btn-checkout{
+    display:block;
+    background:#2563eb;
+    color:#fff;
+    text-align:center;
+    padding:12px;
+    border-radius:10px;
+    margin-top:15px;
+    text-decoration:none;
+}
+
+.btn-outline{
+    display:block;
+    text-align:center;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin-top:10px;
+    text-decoration:none;
+    color:#111;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+    .cart-item{
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
+    .cart-price{
+        text-align:left;
+    }
+}

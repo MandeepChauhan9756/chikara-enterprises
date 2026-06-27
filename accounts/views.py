@@ -2,6 +2,8 @@ from email.message import EmailMessage
 
 from django.contrib import auth, messages
 from django.shortcuts import get_object_or_404, redirect, render
+
+from chikaraenterprises import settings
 from .models import Account, UserProfile
 from orders.models import Order, OrderProduct
 from .forms import RegistrationForm, UserForm, UserProfileForm
@@ -14,7 +16,7 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, EmailMultiAlternatives
 
 from carts.models import Cart, CartItem
 from carts.views import _cart_id
@@ -44,17 +46,20 @@ def register(request):
             
             # User activation email code (commented out)
             current_site = get_current_site(request)
-            mail_subject = 'Please activate your account'
-            message = render_to_string('accounts/account_verification_email.html', {
+            subject = "Please activate your account"
+            from_email = settings.EMAIL_HOST_USER
+            html_content = render_to_string('accounts/account_verification_email.html', {
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
+            text_content = "Please activate your account"
             to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
-            return redirect('/accounts/login/?command=verification&email='+email)
+            email = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+            email.attach_alternative(html_content, "text/html")  # IMPORTANT
+            email.send()
+            return redirect('/accounts/login/?command=verification&email='+to_email)
     else:
         form = RegistrationForm()
     context = {
@@ -165,16 +170,19 @@ def forgotPassword(request):
             
             # Reset password email code (commented out)
             current_site = get_current_site(request)
-            mail_subject = 'Reset Your Password'
-            message = render_to_string('accounts/reset_password_email.html', {
+            subject = "Reset Your Password"
+            from_email = settings.EMAIL_HOST_USER
+            html_content = render_to_string('accounts/reset_password_email.html', {
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
+            text_content = "Reset your password"
             to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
+            mail = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+            mail.attach_alternative(html_content, "text/html")  # 🔥 THIS IS CRITICAL
+            mail.send()
             
             messages.success(request, 'Password reset email has been sent to your email address.')
             return redirect('login')

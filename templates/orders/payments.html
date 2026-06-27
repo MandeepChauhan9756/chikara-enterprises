@@ -2,215 +2,185 @@
 {% load static %}
 
 {% block content %}
-
-
-<section class="section-content padding-y bg">
-	<div class="container">
-
-		<!-- ============================ COMPONENT 1 ================================= -->
-		<h4 class="text-center mb-20">Review Your Order and Make Payment</h4>
-		<div class="row">
-
-			<aside class="col-lg-8">
-				<div class="card">
-					<h5 class="card-header">Billing Address</h5>
-					<div class="card-body">
-						<p class="card-text mb-0">{{order.full_name}}</p>
-						<p class="card-text mb-0">{{order.full_address}}</p>
-						<p class="card-text mb-0">{{order.city}}, {{order.state}}</p>
-						<p class="card-text mb-0">{{order.country}}</p>
-						<p class="card-text mb-0">{{order.email}}</p>
-						<p class="card-text mb-0">{{order.phone}}</p>
-						{% if order.order_note %}
-						<b>Order Note: </b> {{order.order_note}}
-						{% endif %}
-
-
-					</div>
-				</div>
-				<div class="card">
-					<h5 class="card-header">Payment Method</h5>
-					<div class="card-body">
-						<p class="card-text">PayPal</p>
-
-					</div>
-				</div>
-				<div class="card">
-					<h5 class="card-header">Review Products</h5>
-					<div class="card-body">
-						<table class="table table-borderless table-shopping-cart">
-							<thead class="text-muted">
-								<tr class="small text-uppercase">
-									<th scope="col">Product</th>
-									<th scope="col" width="120">Quantity</th>
-									<th scope="col" width="120">Price</th>
-
-								</tr>
-							</thead>
-							<tbody>
-
-								{% for cart_item in cart_items %}
-								<tr>
-									<td>
-										<figure class="itemside align-items-center">
-											<div class="aside"><img src="{{ cart_item.product.images.url }}" class="img-sm"></div>
-											<figcaption class="info">
-												<a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
-												<p class="text-muted small">
-													{% if cart_item.variations.all %}
-													{% for item in cart_item.variations.all %}
-													{{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
-													{% endfor %}
-													{% endif %}
-												</p>
-											</figcaption>
-										</figure>
-									</td>
-									<td>
-										<!-- col.// -->
-										<label for="">{{cart_item.quantity}}</label>
-									</td>
-									<td>
-										<div class="price-wrap">
-											<var class="price">$ {{ cart_item.sub_total }}</var>
-											<small class="text-muted"> $ {{ cart_item.product.price }} each </small>
-										</div> <!-- price-wrap .// -->
-									</td>
-
-								</tr>
-								{% endfor %}
-
-							</tbody>
-						</table>
-
-					</div>
-				</div>
-
-			</aside> <!-- col.// -->
-			<aside class="col-lg-4">
-
-				<div class="card">
-					<div class="card-body">
-						<dl class="dlist-align">
-							<dt>Total price:</dt>
-							<dd class="text-right">$ {{total}}</dd>
-						</dl>
-						<dl class="dlist-align">
-							<dt>Tax:</dt>
-							<dd class="text-right"> $ {{tax}}</dd>
-						</dl>
-						<dl class="dlist-align">
-							<dt>Grand Total:</dt>
-							<dd class="text-right text-dark b"><strong>$ {{grand_total}}</strong></dd>
-						</dl>
-						<hr>
-						<p class="text-center mb-3">
-							<img src="{% static './images/misc/payments.png' %}" height="26">
-						</p>
-
-
-						{% comment %} <div id="paypal-button-container">
-							<!-- PayPal Button Will Load -->
-						</div> {% endcomment %}
-						<button id="rzp-button" class="btn btn-primary btn-block">
-							Pay with Razorpay
-						</button>
-
-					</div> <!-- card-body.// -->
-				</div> <!-- card.// -->
-
-			</aside> <!-- col.// -->
-
-
-		</div> <!-- row.// -->
-
-		<!-- ============================ COMPONENT 1 END .// ================================= -->
-
-	</div> <!-- container .//  -->
-</section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
-
-<script>
-
-/*	function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
+  <style>
+    /* ===== Checkout Page Styling ===== */
+    
+    .checkout-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      text-align: center;
+      color: #1f2937;
     }
-    return cookieValue;
-}
+    
+    .checkout-card {
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    
+    .checkout-card .card-header {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      padding: 12px 18px;
+    }
+    
+    .checkout-card .card-body {
+      padding: 18px;
+    }
+    
+    .price-box {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid #eee;
+    }
+    
+    .pay-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      color: #fff;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+    
+    .pay-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+    }
+    
+    .table-shopping-cart img {
+      border-radius: 10px;
+      border: 1px solid #eee;
+    }
+  </style>
 
-	var amount = "{{ grand_total }}"
-	var url = "{% url 'payments' %}"
-	var csrftoken = getCookie('csrftoken');
-	var orderID = "{{order.order_number}}"
-	var payment_method = 'PayPal'
-	{% comment %} var redirect_url = "{% url 'order_complete' %}" {% endcomment %}
-	// Render the PayPal button into #paypal-button-container
-	paypal.Buttons({
+  <section class="section-content padding-y bg">
+    <div class="container">
+      <h4 class="checkout-title">Review Your Order & Make Payment</h4>
 
-		style: {
-			color: 'blue',
-			shape: 'rect',
-			label: 'pay',
-			height: 40
-		},
+      <div class="row">
+        <!-- ================= LEFT SIDE ================= -->
+        <aside class="col-lg-8">
+          <div class="card checkout-card">
+            <h5 class="card-header">Billing Address</h5>
+            <div class="card-body">
+              <p>
+                <b>{{ order.full_name }}</b>
+              </p>
+              <p>{{ order.full_address }}</p>
+              <p>{{ order.city }}, {{ order.state }}</p>
+              <p>{{ order.country }}</p>
+              <p>{{ order.email }}</p>
+              <p>{{ order.phone }}</p>
 
-		// Set up the transaction
-		createOrder: function(data, actions) {
-			return actions.order.create({
-				purchase_units: [{
-					amount: {
-						value: amount,
-					}
-				}]
-			});
-		},
+              {% if order.order_note %}
+                <hr />
+                <p>
+                  <b>Note:</b> {{ order.order_note }}
+                </p>
+              {% endif %}
+            </div>
+          </div>
 
-		// Finalize the transaction
-		onApprove: function(data, actions) {
-			return actions.order.capture().then(function(details) {
-				// Show a success message to the buyer
-				console.log(details);
-				sendData();
-				function sendData(){
-					fetch(url, {
-						method : "POST",
-						headers: {
-							"Content-type": "application/json",
-							"X-CSRFToken": csrftoken,
-						},
-						body: JSON.stringify({
-							orderID: orderID,
-							transID: details.id,
-							payment_method: payment_method,
-							status: details.status,
-						}),
-					})
-				  .then((response) => response.json())
-				  .then((data) => {
-						window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
-					});
-				}
-			});
-		}
+          <div class="card checkout-card">
+            <h5 class="card-header">Payment Method</h5>
+            <div class="card-body">
+              <span class="badge bg-primary">Razorpay</span>
+            </div>
+          </div>
 
+          <div class="card checkout-card">
+            <h5 class="card-header">Products</h5>
+            <div class="card-body">
+              <table class="table table-borderless table-shopping-cart">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
 
-	}).render('#paypal-button-container'); */
-</script>
+                <tbody>
+                  {% for cart_item in cart_items %}
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="{{ cart_item.product.images.url }}" width="60" />
+                          <div class="ml-2">
+                            <a href="{{ cart_item.product.get_url }}" class="text-dark">{{ cart_item.product.product_name }}</a>
+                          </div>
+                        </div>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                        <small class="text-muted">
+                          {% for item in cart_item.variations.all %}
+                            {{ item.variation_category|capfirst }} :
+                            {{ item.variation_value|capfirst }} <br />
+                          {% endfor %}
+                        </small>
+                      </td>
+
+                      <td>{{ cart_item.quantity }}</td>
+
+                      <td>
+                        <b>$ {{ cart_item.sub_total }}</b><br />
+                        <small class="text-muted">${{ cart_item.product.price }} each</small>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </aside>
+
+        <!-- ================= RIGHT SIDE ================= -->
+        <aside class="col-lg-4">
+          <div class="card checkout-card">
+            <div class="card-body price-box">
+              <dl class="dlist-align">
+                <dt>Total</dt>
+                <dd class="text-right">$ {{ total }}</dd>
+              </dl>
+
+              <dl class="dlist-align">
+                <dt>Tax</dt>
+                <dd class="text-right">$ {{ tax }}</dd>
+              </dl>
+
+              <hr />
+
+              <dl class="dlist-align">
+                <dt>
+                  <b>Grand Total</b>
+                </dt>
+                <dd class="text-right"><b>$ {{ grand_total }}</b></dd>
+              </dl>
+
+              <img src="{% static './images/misc/payments.png' %}" height="25" class="mt-3 mb-2" />
+
+              <button id="rzp-button" class="pay-btn">Pay with Razorpay</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
-
 function getCookie(name) {
     let cookieValue = null;
 
@@ -221,34 +191,25 @@ function getCookie(name) {
             const cookie = cookies[i].trim();
 
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(
-                    cookie.substring(name.length + 1)
-                );
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
             }
         }
     }
-
     return cookieValue;
 }
 
-var url = "{% url 'payments' %}";
-var csrftoken = getCookie('csrftoken');
+const url = "{% url 'payments' %}";
+const csrftoken = getCookie('csrftoken');
 
-var orderID = "{{ order.order_number }}";
-var payment_method = "Razorpay";
-var redirect_url = "{% url 'order_complete' %}"
+const orderID = "{{ order.order_number }}";
+const redirect_url = "{% url 'order_complete' %}";
 
-var options = {
-
+const options = {
     key: "{{ razorpay_key_id }}",
-
     amount: "{{ razorpay_amount }}",
-
     currency: "INR",
-
     name: "My Ecommerce Store",
-
     description: "Order Payment",
 
     order_id: "{{ razorpay_order_id }}",
@@ -260,70 +221,60 @@ var options = {
     },
 
     theme: {
-        color: "#3399cc"
+        color: "#3b82f6"
     },
 
     handler: function (response) {
 
-        console.log(response);
-
         fetch(url, {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken,
+                "X-CSRFToken": csrftoken
             },
-
             body: JSON.stringify({
-
                 orderID: orderID,
-
                 transID: response.razorpay_payment_id,
-
-                payment_method: payment_method,
-
+                payment_method: "Razorpay",
                 status: "COMPLETED",
-
                 razorpay_order_id: response.razorpay_order_id,
-
                 razorpay_signature: response.razorpay_signature
-
             })
-
         })
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-            //console.log('Success: ', data);
-            window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
+            window.location.href = redirect_url + "?order_number=" + data.order_number + "&payment_id=" + data.transID;
+        })
+        .catch(err => {
+            console.log("Payment success but backend failed:", err);
         });
     }
 };
 
-var rzp = new Razorpay(options);
-document.getElementById("rzp-button").onclick = function(e){
+const rzp = new Razorpay(options);
+
+document.getElementById("rzp-button").onclick = function (e) {
     rzp.open();
     e.preventDefault();
 };
 
-rzp.on('payment.failed', function (response){
-    console.log(response.error);
+rzp.on("payment.failed", function (response) {
+
     fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": csrftoken,
+            "X-CSRFToken": csrftoken
         },
         body: JSON.stringify({
             orderID: orderID,
             transID: "",
-            payment_method: payment_method,
+            payment_method: "Razorpay",
             status: "FAILED"
         })
     });
-    alert(response.error.description);
-});
 
+    alert("Payment Failed: " + response.error.description);
+});
 </script>
 {% endblock %}

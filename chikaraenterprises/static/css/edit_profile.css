@@ -1,0 +1,411 @@
+/* ==========================
+        PROFILE PAGE
+========================== */
+
+.profile-page{
+    background:#f4f7fb;
+    padding:60px 0;
+    min-height:85vh;
+}
+
+/* ==========================
+        MAIN CARD
+========================== */
+
+.profile-card{
+    background:#fff;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.08);
+}
+
+/* ==========================
+        HEADER
+========================== */
+
+.profile-header{
+    background:linear-gradient(135deg,#0d6efd,#2563eb,#3b82f6);
+    color:#fff;
+    padding:20px 40px;
+    border-radius: 25px;
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+}
+
+.profile-avatar{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    overflow:hidden;
+    margin-right:25px;
+    border:5px solid rgba(255,255,255,.25);
+    background:#fff;
+}
+
+.profile-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.profile-header h2{
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:8px;
+    align-items: start;
+    display: flex;
+}
+
+.profile-header p{
+    margin:0;
+    opacity:.9;
+    font-size:15px;
+}
+
+/* ==========================
+        BODY
+========================== */
+
+.profile-body{
+    padding:40px;
+}
+
+/* ==========================
+        SECTION
+========================== */
+
+.form-section{
+    margin-bottom:45px;
+}
+
+.form-section h4{
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:25px;
+    color:#1f2937;
+    display:flex;
+    align-items:center;
+}
+
+.form-section h4 i{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#e8f1ff;
+    color:#0d6efd;
+    margin-right:12px;
+    font-size:18px;
+}
+
+/* ==========================
+        LABELS
+========================== */
+
+.profile-body label{
+    font-weight:600;
+    color:#374151;
+    margin-bottom:8px;
+    display:flex;
+}
+
+/* ==========================
+        INPUTS
+========================== */
+
+.profile-body input,
+.profile-body textarea,
+.profile-body select{
+    width:100%;
+    height:52px;
+    border:1px solid #d8dee8;
+    border-radius:14px;
+    padding:0 18px;
+    font-size:15px;
+    background:#fff;
+    transition:.35s;
+}
+
+.profile-body textarea{
+    height:120px;
+    padding-top:15px;
+    resize:none;
+}
+
+.profile-body input:focus,
+.profile-body textarea:focus,
+.profile-body select:focus{
+    border-color:#0d6efd;
+    box-shadow:0 0 0 5px rgba(13,110,253,.12);
+    outline:none;
+}
+
+/* File Input */
+
+input[type=file]{
+    height:auto;
+    padding:12px;
+    cursor:pointer;
+}
+
+/* ==========================
+        ROW GAP
+========================== */
+
+.profile-body .row{
+    row-gap:20px;
+}
+
+/* ==========================
+        SAVE BUTTON
+========================== */
+
+.profile-actions{
+    margin-top:40px;
+    display:flex;
+    justify-content:flex-end;
+}
+
+.save-btn{
+    border:none;
+    outline:none;
+    padding:14px 38px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#0d6efd,#2563eb);
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.35s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 12px 30px rgba(13,110,253,.25);
+}
+
+.save-btn i{
+    font-size:16px;
+}
+
+.save-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 40px rgba(13,110,253,.35);
+    background:linear-gradient(135deg,#2563eb,#0d6efd);
+}
+
+.save-btn:active{
+    transform:scale(.98);
+}
+
+/* ==========================
+        FORM ANIMATION
+========================== */
+
+.profile-card{
+    animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* ==========================
+        INPUT HOVER
+========================== */
+
+.profile-body input:hover,
+.profile-body textarea:hover,
+.profile-body select:hover{
+    border-color:#b9c6d8;
+}
+
+/* ==========================
+        FILE INPUT
+========================== */
+
+input[type=file]{
+    background:#f8fbff;
+    border:2px dashed #c9d8ee;
+    transition:.3s;
+}
+
+input[type=file]:hover{
+    border-color:#0d6efd;
+    background:#eef5ff;
+}
+
+/* ==========================
+        SECTION CARD EFFECT
+========================== */
+
+.form-section{
+    padding:30px;
+    border:1px solid #edf1f6;
+    border-radius:18px;
+    background:#ffffff;
+    transition:.35s;
+}
+
+.form-section:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 35px rgba(0,0,0,.05);
+}
+
+/* ==========================
+        PLACEHOLDER
+========================== */
+
+.profile-body input::placeholder,
+.profile-body textarea::placeholder{
+    color:#9ca3af;
+}
+
+/* ==========================
+        SCROLLBAR
+========================== */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#f2f4f8;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#0d6efd;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#2563eb;
+}
+
+/* ==========================
+        RESPONSIVE
+========================== */
+
+@media(max-width:992px){
+
+    .profile-page{
+        padding:40px 0;
+    }
+
+    .profile-header{
+        padding:30px;
+    }
+
+    .profile-body{
+        padding:30px;
+    }
+
+    .profile-avatar{
+        width:90px;
+        height:90px;
+    }
+
+    .profile-header h2{
+        font-size:28px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .header-left{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .profile-avatar{
+        margin-right:0;
+        margin-bottom:20px;
+    }
+
+    .profile-header h2{
+        font-size:24px;
+    }
+
+    .profile-body{
+        padding:25px;
+    }
+
+    .form-section{
+        padding:22px;
+    }
+
+    .profile-actions{
+        justify-content:center;
+    }
+
+    .save-btn{
+        width:100%;
+        justify-content:center;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .profile-page{
+        padding:25px 0;
+    }
+
+    .profile-header{
+        padding:25px 20px;
+    }
+
+    .profile-body{
+        padding:20px;
+    }
+
+    .profile-avatar{
+        width:80px;
+        height:80px;
+    }
+
+    .profile-header h2{
+        font-size:22px;
+    }
+
+    .form-section h4{
+        font-size:18px;
+    }
+
+    .profile-body input,
+    .profile-body select{
+        height:48px;
+    }
+
+}
+
+/* ==========================
+        SMALL POLISH
+========================== */
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.profile-body .row:last-child{
+    margin-bottom:0;
+}
+
+.profile-card:hover{
+    box-shadow:0 25px 70px rgba(0,0,0,.10);
+}
